@@ -3,6 +3,8 @@ name: Publish to TestPyPI
 on:
   workflow_dispatch:
 
+permissions: read-all
+
 jobs:
   release-test:
     name: Publish to TestPyPI
