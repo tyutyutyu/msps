@@ -1,0 +1,22 @@
+FROM python:3.12.2-alpine3.19
+
+RUN apk add --no-cache \
+    poetry=1.7.1-r0
+
+RUN addgroup -S app && adduser -S app -G app
+RUN mkdir /app \
+    && chown app:app /app
+
+USER app
+
+WORKDIR /app
+
+COPY --chown=app:app poetry.lock pyproject.toml /app/
+RUN poetry install
+
+COPY --chown=app:app src /app/src
+COPY --chown=app:app tests /app/tests
+
+ENTRYPOINT [ "poetry", "run", "pytest" ]
+
+HEALTHCHECK NONE
