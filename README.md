@@ -57,6 +57,7 @@ The tool will automatically switch to the next available profile.
 ```bash
 msps switch
 ```
+
 ```plain
 ╭──────────── Maven Settings Profile Switcher ────────────╮
 │                                                         │
@@ -72,6 +73,7 @@ The specified profile will be activated.
 ```bash
 msps switch work
 ```
+
 ```plain
 ╭───────────── Maven Settings Profile Switcher ──────────────╮
 │                                                            │
@@ -91,6 +93,7 @@ No changes will be made if the specified profile is not found.
 ```bash
 msps switch target_profile
 ```
+
 ```plain
 ╭───────────── Maven Settings Profile Switcher ──────────────╮
 │                                                            │
@@ -110,6 +113,7 @@ msps switch target_profile
 ```bash
 msps list
 ```
+
 ```plain
 ╭───────────── Maven Settings Profile Switcher ──────────────╮
 │                                                            │
