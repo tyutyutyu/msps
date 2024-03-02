@@ -2,14 +2,5 @@
 
 set -e
 
-docker build \
-    --file .docker/Dockerfile.tests \
-    --quiet \
-    --tag tyutyutyu/msps_test \
-    .
-
-docker run \
-    --interactive \
-    --rm \
-    --tty \
-    tyutyutyu/msps_test
+poetry run coverage run --branch --module pytest
+coverage report --show-missing

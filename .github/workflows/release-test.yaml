@@ -1,7 +1,9 @@
 name: Publish to TestPyPI
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: {}
+
+permissions: read-all
 
 jobs:
   release-test:

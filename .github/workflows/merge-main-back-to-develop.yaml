@@ -7,6 +7,8 @@ on:
     types:
       - closed
 
+permissions: read-all
+
 jobs:
   merge-main-back-to-develop:
     if: github.event.pull_request.merged && github.event.action == 'closed'
