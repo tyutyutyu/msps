@@ -15,6 +15,7 @@ packages = [{ include = "msps", from = "src" }, { include = "tests" }]
 python = ">=3.10"
 rich = "^13.7.0"
 typer = "^0.9.0"
+coverage = "^7.4.3"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.0.0"
@@ -39,3 +40,6 @@ strict = true
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
+
+[tool.coverage.run]
+source = ["src/msps"]
