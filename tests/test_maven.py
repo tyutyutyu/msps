@@ -4,7 +4,6 @@ from unittest import mock
 
 from msps.maven import Maven
 
-
 HOME = os.environ["HOME"]
 
 
