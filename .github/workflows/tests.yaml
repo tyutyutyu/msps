@@ -48,11 +48,5 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: tyutyutyu/msps
 
-      - uses: paambaati/codeclimate-action@v2.2.4
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE_TEST_REPORTER_ID }}
-        with:
-          coverageCommand: poetry run coverage run --branch --module pytest
-
       - name: Coveralls
         uses: coverallsapp/github-action@v2
