@@ -47,6 +47,3 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: tyutyutyu/msps
-
-      - name: Coveralls
-        uses: coverallsapp/github-action@v2
