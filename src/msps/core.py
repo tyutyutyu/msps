@@ -71,9 +71,7 @@ class Msps:
 
     def _validate_profile(self, profile: str) -> None:
         if profile not in self._profiles:
-            printer.print_missing_profile(
-                maven.m2_home, self._current_profile, profile, self._profiles
-            )
+            printer.print_missing_profile(maven.m2_home, profile, self._profiles)
             sys.exit(1)
 
     def _switch_to(self, next_profile: str) -> None:
