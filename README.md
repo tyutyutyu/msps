@@ -3,6 +3,8 @@
 ![PyPI - Version](https://img.shields.io/pypi/v/msps?style=for-the-badge)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/msps?style=for-the-badge)
 ![PyPI - License](https://img.shields.io/pypi/l/msps?style=for-the-badge)
+![Sonar Coverage](https://img.shields.io/sonar/coverage/tyutyutyu_msps?server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge)
+![Sonar Quality Gate](https://img.shields.io/sonar/quality_gate/tyutyutyu_msps?server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge)
 
 MSPS is a user-friendly tool that simplifies switching between various Maven settings profiles.
 

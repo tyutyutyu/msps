@@ -22,7 +22,7 @@ def find_settings_profiles() -> MavenProfiles:
         res = re.findall(config.settings_file_pattern, file)
         if res:
             if len(res) > 1:
-                raise Exception(
+                raise ValueError(
                     f"Wrong settings_file_pattern, multiple matches found {res}"
                 )
             profiles.update({res[0]: os.path.join(maven.m2_home, file)})
@@ -33,7 +33,7 @@ class Msps:
     def __init__(self) -> None:
         self._profiles = find_settings_profiles()
         if not self._profiles:
-            raise Exception("No settings profiles found")
+            raise FileNotFoundError("No settings profile file found")
 
         self._current_profile = self._get_current_profile()
 

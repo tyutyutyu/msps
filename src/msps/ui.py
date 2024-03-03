@@ -44,9 +44,7 @@ class Printer:
         text.append(".")
         return text
 
-    def print_result_l1(
-        self, m2_home: str, current_profile: str, next_profile: str
-    ) -> None:
+    def print_result_l1(self, current_profile: str, next_profile: str) -> None:
         self._print(
             self.text_change_profile(current_profile, next_profile),
             style="white",
@@ -69,7 +67,6 @@ class Printer:
     def print_missing_profile(
         self,
         m2_home: str,
-        current_profile: str | None,
         next_profile: str,
         settings_profiles: MavenProfiles,
     ) -> None:

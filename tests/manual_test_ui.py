@@ -4,7 +4,6 @@ from msps.ui import Printer
 def print_test(printer: Printer) -> None:
     print("-" * 80)
     printer.print_result_l1(
-        "/home/testuser/.m2/",
         "current_profile",
         "next_profile",
     )
@@ -22,7 +21,6 @@ def print_test(printer: Printer) -> None:
     printer.print_missing_profile(
         "/home/testuser/.m2/",
         "current_profile",
-        "target_profile",
         {
             "personal": "/home/testuser/.m2/settings__personal.xml",
             "work": "/home/testuser/.m2/settings__work.xml",
