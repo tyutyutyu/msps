@@ -34,7 +34,9 @@ class Printer:
             text.append(")")
         return text
 
-    def text_change_profile(self, current_profile: str | None, next_profile: str) -> Text:
+    def text_change_profile(
+        self, current_profile: str | None, next_profile: str
+    ) -> Text:
         text = Text("Profile changed from ")
         text.append(current_profile or "<empty>", style="cyan bold")
         text.append(" to ")
@@ -42,7 +44,9 @@ class Printer:
         text.append(".")
         return text
 
-    def print_result_l1(self, m2_home: str, current_profile: str, next_profile: str) -> None:
+    def print_result_l1(
+        self, m2_home: str, current_profile: str, next_profile: str
+    ) -> None:
         self._print(
             self.text_change_profile(current_profile, next_profile),
             style="white",

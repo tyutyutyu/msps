@@ -14,17 +14,23 @@ packages = [{ include = "msps", from = "src" }, { include = "tests" }]
 [tool.poetry.dependencies]
 python = ">=3.10"
 rich = "^13.7.0"
-typer = "^0.9.0"
-coverage = "^7.4.3"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.0.0"
+typer = "^0.9.0"
+coverage = "^7.4.3"
+tox = "^4.13.0"
 
 [tool.poetry.group.typing.dependencies]
 mypy = "^1.8.0"
 
 [tool.poetry.group.lint.dependencies]
 pylint = "^3.0.3"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.2.0"
+pytest-sugar = "^1.0.0"
+pytest-cov = "^4.1.0"
 
 [tool.poetry.scripts]
 msps = "msps.__main__:main"
@@ -40,6 +46,3 @@ strict = true
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
-
-[tool.coverage.run]
-source = ["src/msps"]
