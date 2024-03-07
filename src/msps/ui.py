@@ -2,7 +2,7 @@ from rich.console import Console, Group, RenderableType
 from rich.panel import Panel
 from rich.text import Text
 
-from msps.core import MavenProfiles
+from msps.model import MavenProfiles
 
 TITLE = "Maven Settings Profile Switcher"
 

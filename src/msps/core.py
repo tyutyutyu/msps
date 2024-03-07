@@ -7,9 +7,8 @@ import sys
 
 from msps.config import Config
 from msps.maven import Maven
+from msps.model import MavenProfiles
 from msps.ui import Printer
-
-MavenProfiles = dict[str, str]
 
 maven = Maven()
 config = Config()
