@@ -37,7 +37,6 @@ msps = "msps.__main__:main"
 testui = "tests.manual_test_ui:main"
 
 [tool.mypy]
-files = "src, tests"
 mypy_path = "src"
 namespace_packages = true
 explicit_package_bases = true
@@ -46,3 +45,6 @@ strict = true
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
+
+[tool.isort]
+profile = "black"
