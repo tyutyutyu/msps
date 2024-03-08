@@ -6,13 +6,22 @@
 ![Sonar Coverage](https://img.shields.io/sonar/coverage/tyutyutyu_msps?server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge)
 ![Sonar Quality Gate](https://img.shields.io/sonar/quality_gate/tyutyutyu_msps?server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge)
 
-MSPS is a user-friendly tool that simplifies switching between various Maven settings profiles.
+MSPS is a user-friendly tool that simplifies switching between various Maven
+settings profiles.
 
 ## The problem
 
-Profiles let you set up repositories or servers for each project or environment, streamlining your workflow and keeping your workspace clean. You can set up different settings for personal coding, testing new tools, and work. However, there are a few settings, like mirror configurations, that can't be tucked away in profiles.
+Profiles let you set up repositories or servers for each project or
+environment, streamlining your workflow and keeping your workspace clean. You
+can set up different settings for personal coding, testing new tools, and
+work. However, there are a few settings, like mirror configurations, that
+can't be tucked away in profiles.
 
-This means if you need to switch between a private mirror in one environment and the Maven Central in another, you'll need to make those adjustments directly in the settings.xml file itself, or you might need to replace the entire file. This can be cumbersome, especially when managing many profiles and switching between them frequently.
+This means if you need to switch between a private mirror in one environment
+and the Maven Central in another, you'll need to make those adjustments
+directly in the settings.xml file itself, or you might need to replace the
+entire file. This can be cumbersome, especially when managing many profiles and
+switching between them frequently.
 
 ## :hammer: Requirements
 
