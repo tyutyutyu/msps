@@ -37,7 +37,8 @@ msps = "msps.__main__:main"
 testui = "tests.manual_test_ui:main"
 
 [tool.mypy]
-mypy_path = "src"
+packages = "src"
+disable_error_code = "import-untyped"
 namespace_packages = true
 explicit_package_bases = true
 show_error_codes = true

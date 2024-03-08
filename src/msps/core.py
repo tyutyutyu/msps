@@ -51,7 +51,7 @@ class Msps:
 
     def _get_current_profile(self) -> str | None:
         try:
-            settings_file = os.readlink(maven.maven_settings)
+            settings_file = str(os.readlink(maven.maven_settings))
         except FileNotFoundError:
             settings_file = None
 
@@ -62,8 +62,8 @@ class Msps:
 
     def _get_next_profile(self) -> str:
         if not self._current_profile:
-            return next(iter(self._profiles))
-        profiles = list(self._profiles.keys())
+            return str(next(iter(self._profiles)))
+        profiles: list[str] = list(self._profiles.keys())
         if profiles.index(self._current_profile) == len(profiles) - 1:
             return profiles[0]
         return profiles[profiles.index(self._current_profile) + 1]
