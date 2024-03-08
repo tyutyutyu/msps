@@ -7,6 +7,7 @@ app = typer.Typer()
 
 @app.command()
 def switch(profile: str | None) -> None:
+    # Add type hints to the switch function
     Msps().switch_to(profile)
 
 

@@ -3,23 +3,40 @@
 ![PyPI - Version](https://img.shields.io/pypi/v/msps?style=for-the-badge)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/msps?style=for-the-badge)
 ![PyPI - License](https://img.shields.io/pypi/l/msps?style=for-the-badge)
+![Sonar Coverage](https://img.shields.io/sonar/coverage/tyutyutyu_msps?server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge)
+![Sonar Quality Gate](https://img.shields.io/sonar/quality_gate/tyutyutyu_msps?server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge)
 
-MSPS is a user-friendly tool that simplifies switching between various Maven settings profiles.
+MSPS is a user-friendly tool that simplifies switching between various Maven
+settings profiles.
 
-## Requirements
+## The problem
+
+Profiles let you set up repositories or servers for each project or
+environment, streamlining your workflow and keeping your workspace clean. You
+can set up different settings for personal coding, testing new tools, and
+work. However, there are a few settings, like mirror configurations, that
+can't be tucked away in profiles.
+
+This means if you need to switch between a private mirror in one environment
+and the Maven Central in another, you'll need to make those adjustments
+directly in the settings.xml file itself, or you might need to replace the
+entire file. This can be cumbersome, especially when managing many profiles and
+switching between them frequently.
+
+## :hammer: Requirements
 
 - Python 3.10 or later
 
 > [!NOTE]
 > Developed and tested on Linux (Ubuntu); may also work on macOS.
 
-## Installation
+## :floppy_disk: Installation
 
 ```bash
 pip install msps
 ```
 
-## Configuration
+## :gear: Configuration
 
 ### Maven settings profiles
 
@@ -33,7 +50,7 @@ The profiles should be named in the following format:
 settings__profile_name.xml
 ```
 
-## Usage
+## :wrench: Usage
 
 ```plain
 msps <command> [profile]
@@ -48,7 +65,7 @@ msps <command> [profile]
 
 - The name of the profile to switch to.
 
-## Examples
+## :man_mechanic: Examples
 
 ### Unspecified profile switch
 
