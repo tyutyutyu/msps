@@ -35,7 +35,7 @@ jobs:
         run: poetry install
 
       - name: Bump version
-        run: poetry version "$(poetry version --short)+test${GITHUB_RUN_NUMBER}"
+        run: poetry version "$(poetry version --short)+rc${GITHUB_RUN_NUMBER}"
 
       - name: Build
         run: poetry build
