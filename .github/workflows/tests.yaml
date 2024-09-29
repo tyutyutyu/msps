@@ -5,6 +5,8 @@ on:
     branches-ignore:
       - main
 
+permissions: read-all
+
 jobs:
   test:
     strategy:
@@ -33,8 +35,48 @@ jobs:
       - name: Install packages via Poetry
         run: poetry install
 
+      - name: Run tests with coverage
+        run: poetry run coverage run --branch --module pytest
+
       - name: Check type annotations
         run: poetry run mypy
 
       - name: Check code style
         run: poetry run pylint msps
+
+  sonarcloud:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Update python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          architecture: x64
+
+      - name: Install Poetry
+        run: curl -sSL curl -sSL https://install.python-poetry.org | python3 -
+
+      - name: Set env
+        run: echo "export PATH=${PATH}:$HOME/.poetry/bin" >> $GITHUB_ENV
+
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+
+      - name: Install packages via Poetry
+        run: poetry install
+      - uses: actions/checkout@v4
+
+      - name: Run tox
+        run: poetry run tox -e py
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@v3.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          JAVA_HOME: /opt/java/openjdk
+          SONAR_SCANNER_HOME: /opt/sonar-scanner
