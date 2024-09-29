@@ -35,7 +35,7 @@ jobs:
         run: poetry install
 
       - name: Bump version
-        run: poetry version "$(poetry version --short)${GITHUB_RUN_NUMBER}"
+        run: poetry version "$(poetry version --short)rc${GITHUB_RUN_NUMBER}"
 
       - name: Build
         run: poetry build
@@ -44,3 +44,4 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           repository-url: https://test.pypi.org/legacy/
+          verbose: true
