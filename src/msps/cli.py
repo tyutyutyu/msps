@@ -1,3 +1,5 @@
+from typing import Annotated, Optional
+
 import typer
 
 from msps.core import Msps
@@ -6,8 +8,7 @@ app = typer.Typer()
 
 
 @app.command()
-def switch(profile: str | None) -> None:
-    # Add type hints to the switch function
+def switch(profile: Annotated[Optional[str], typer.Argument()] = None) -> None:
     Msps().switch_to(profile)
 
 
