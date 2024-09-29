@@ -21,15 +21,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set Git config
+      - name: Create Pull Request to develop
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
-          git config --local user.email "36857+actions@users.noreply.github.com"
-          git config --local user.name "Github Actions"
+          PR_URL=$(gh pr create \
+            --base develop \
+            --title "Merge release back to develop" \
+            --body "Auto-merge release back to develop")
+          echo "PR_URL=${PR_URL}" >> $GITHUB_ENV
 
-      - name: Merge main back to dev
+      - name: Merge Pull Request to develop
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
-          git fetch --unshallow
-          git checkout develop
-          git pull
-          git merge --no-ff main -m "Auto-merge main back to dev"
-          git push
+          gh pr merge \
+            --auto \
+            --merge \
+            --delete-branch \
+             "${PR_URL}"

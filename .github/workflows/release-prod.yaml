@@ -55,10 +55,30 @@ jobs:
       - name: Create GitHub Release
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: >-
-          gh release create
-          "${VERSION}"
-          dist/**
-          --repo '${{ github.repository }}'
-          --generate-notes
-          --title "${VERSION}"
+        run: |
+          gh release create \
+            "${VERSION}" \
+            dist/** \
+            --repo '${{ github.repository }}' \
+            --generate-notes \
+            --title "${VERSION}"
+
+      - name: Create Pull Request to main
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          PR_URL=$(gh pr create \
+            --base main \
+            --title "Merge release back to main" \
+            --body "Auto-merge release back to main")
+          echo "PR_URL=${PR_URL}" >> $GITHUB_ENV
+
+      - name: Merge Pull Request to main
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          gh pr merge \
+            --auto \
+            --merge \
+            --delete-branch \
+             "${PR_URL}"
