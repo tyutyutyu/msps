@@ -17,7 +17,7 @@ rich = "^13.7.0"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.0.0"
-typer = "^0.14.0"
+typer = "^0.15.0"
 coverage = "^7.4.3"
 tox = "^4.13.0"
 
