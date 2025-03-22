@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "msps"
-version = "1.0.2"
+version = "1.0.3"
 description = "Maven Settings Profile Switcher"
 authors = ["István Földházi <istvan.foldhazi@gmail.com>"]
 license = "MIT"

@@ -3,4 +3,4 @@
 set -e
 
 poetry run coverage run --branch --module pytest
-coverage report --show-missing
+poetry run coverage report --show-missing
