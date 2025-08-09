@@ -13,7 +13,7 @@ packages = [{ include = "msps", from = "src" }, { include = "tests" }]
 
 [tool.poetry.dependencies]
 python = ">=3.10"
-rich = "^13.7.0"
+rich = "^14.0.0"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.0.0"
