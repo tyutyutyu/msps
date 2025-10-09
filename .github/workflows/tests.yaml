@@ -24,7 +24,7 @@ jobs:
           architecture: x64
 
       - name: Install UV
-        uses: astral-sh/setup-uv@v4
+        uses: astral-sh/setup-uv@v7
 
       - name: Checkout branch
         uses: actions/checkout@v4
@@ -52,7 +52,7 @@ jobs:
           architecture: x64
 
       - name: Install UV
-        uses: astral-sh/setup-uv@v4
+        uses: astral-sh/setup-uv@v7
 
       - name: Checkout branch
         uses: actions/checkout@v4
