@@ -228,6 +228,8 @@ lint = [
 ]
 test = [
     { name = "coverage" },
+    { name = "mypy" },
+    { name = "pylint" },
     { name = "pytest" },
     { name = "pytest-cov" },
     { name = "tox" },
@@ -241,8 +243,10 @@ requires-dist = [
     { name = "black", marker = "extra == 'dev'", specifier = ">=25.0.0" },
     { name = "coverage", marker = "extra == 'test'", specifier = ">=7.4.3" },
     { name = "isort", marker = "extra == 'dev'", specifier = ">=5.13.2" },
+    { name = "mypy", marker = "extra == 'test'", specifier = ">=1.8.0" },
     { name = "mypy", marker = "extra == 'typing'", specifier = ">=1.8.0" },
     { name = "pylint", marker = "extra == 'lint'", specifier = ">=3.0.3" },
+    { name = "pylint", marker = "extra == 'test'", specifier = ">=3.0.3" },
     { name = "pytest", marker = "extra == 'test'", specifier = ">=8.0.0" },
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=6.0.0" },
     { name = "pytest-cov", marker = "extra == 'test'", specifier = ">=6.0.0" },
