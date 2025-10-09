@@ -25,7 +25,7 @@ switching between them frequently.
 
 ## :hammer: Requirements
 
-- Python 3.10 or later
+- Python 3.13 or later
 
 > [!NOTE]
 > Developed and tested on Linux (Ubuntu); may also work on macOS.
