@@ -1,40 +1,42 @@
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
 
-[tool.poetry]
+[project]
 name = "msps"
 version = "1.0.2"
 description = "Maven Settings Profile Switcher"
-authors = ["István Földházi <istvan.foldhazi@gmail.com>"]
-license = "MIT"
+authors = [{ name = "István Földházi", email = "istvan.foldhazi@gmail.com" }]
+license = { text = "MIT" }
 readme = "README.md"
-packages = [{ include = "msps", from = "src" }, { include = "tests" }]
+requires-python = ">=3.13"
+dependencies = ["rich>=14.0.0", "typer>=0.19.0"]
 
-[tool.poetry.dependencies]
-python = ">=3.10"
-rich = "^14.0.0"
+[project.optional-dependencies]
+test = [
+  "pytest>=8.0.0",
+  "coverage>=7.4.3",
+  "tox>=4.13.0",
+  "pytest-cov>=6.0.0",
+  "mypy>=1.8.0",
+  "pylint>=3.0.3",
+]
+typing = ["mypy>=1.8.0"]
+lint = ["pylint>=3.0.3"]
+dev = [
+  "black>=25.0.0",
+  "pytest-sugar>=1.0.0",
+  "pytest-cov>=6.0.0",
+  "isort>=5.13.2",
+]
 
-[tool.poetry.group.test.dependencies]
-pytest = "^8.0.0"
-typer = "^0.16.0"
-coverage = "^7.4.3"
-tox = "^4.13.0"
-
-[tool.poetry.group.typing.dependencies]
-mypy = "^1.8.0"
-
-[tool.poetry.group.lint.dependencies]
-pylint = "^3.0.3"
-
-[tool.poetry.group.dev.dependencies]
-black = "^25.0.0"
-pytest-sugar = "^1.0.0"
-pytest-cov = "^6.0.0"
-
-[tool.poetry.scripts]
+[project.scripts]
 msps = "msps.__main__:main"
 testui = "tests.manual_test_ui:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["msps", "tests"]
 
 [tool.mypy]
 packages = "src"
