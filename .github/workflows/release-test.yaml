@@ -34,7 +34,7 @@ jobs:
         run: uv sync
 
       - name: Bump version
-        run: sed -i 's/version = "\([^"]*\)"/version = "\1rc${{GITHUB_RUN_NUMBER}}"/' pyproject.toml
+        run: sed -i 's/version = "\([^"]*\)"/version = "\1rc${{ github.run_number }}"/' pyproject.toml
 
       - name: Build
         run: uv build
