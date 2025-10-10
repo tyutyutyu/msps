@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "msps"
-version = "1.0.2"
+version = "1.0.4"
 description = "Maven Settings Profile Switcher"
 authors = [{ name = "István Földházi", email = "istvan.foldhazi@gmail.com" }]
 license = { text = "MIT" }
