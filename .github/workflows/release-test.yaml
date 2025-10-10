@@ -38,23 +38,23 @@ jobs:
       - name: Bump version to RC
         id: version
         run: |
-          # Aktuális verzió kiolvasása
-          VERSION=$(uv version --project)
+          VERSION=$(uv version | awk '{print $2}')
 
-          # RC számláló: hány ilyen RC tag van már?
-          RC_COUNT=$(git tag -l "${VERSION}rc*" | wc -l)
+          RC_COUNT=$(git tag -l "${VERSION}-rc.*" | wc -l)
           RC_COUNT=$((RC_COUNT + 1))
 
-          RC_VERSION="${VERSION}rc${RC_COUNT}"
+          PEP440_RC_VERSION="${VERSION}rc${RC_COUNT}"
+          SEMVER_RC_VERSION="${VERSION}-rc.${RC_COUNT}"
 
-          # Verzió beállítása uv-vel
-          uv version "${RC_VERSION}"
+          uv version "${PEP440_RC_VERSION}"
 
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
-          echo "rc_version=${RC_VERSION}" >> $GITHUB_OUTPUT
+          echo "rc_version=${SEMVER_RC_VERSION}" >> $GITHUB_OUTPUT
+          echo "pep440_rc_version=${PEP440_RC_VERSION}" >> $GITHUB_OUTPUT
 
           echo "Original version: ${VERSION}"
-          echo "RC version: ${RC_VERSION}"
+          echo "RC version (SemVer): ${SEMVER_RC_VERSION}"
+          echo "RC version (PEP 440): ${PEP440_RC_VERSION}"
 
       - name: Build
         run: uv build
