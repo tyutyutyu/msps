@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - name: Install uv
         uses: astral-sh/setup-uv@v7
@@ -33,8 +35,26 @@ jobs:
       - name: Install packages
         run: uv sync
 
-      - name: Bump version
-        run: sed -i 's/version = "\([^"]*\)"/version = "\1rc${{ github.run_number }}"/' pyproject.toml
+      - name: Bump version to RC
+        id: version
+        run: |
+          # Aktuális verzió kiolvasása
+          VERSION=$(uv version --project)
+
+          # RC számláló: hány ilyen RC tag van már?
+          RC_COUNT=$(git tag -l "${VERSION}rc*" | wc -l)
+          RC_COUNT=$((RC_COUNT + 1))
+
+          RC_VERSION="${VERSION}rc${RC_COUNT}"
+
+          # Verzió beállítása uv-vel
+          uv version "${RC_VERSION}"
+
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "rc_version=${RC_VERSION}" >> $GITHUB_OUTPUT
+
+          echo "Original version: ${VERSION}"
+          echo "RC version: ${RC_VERSION}"
 
       - name: Build
         run: uv build
@@ -44,3 +64,11 @@ jobs:
         with:
           repository-url: https://test.pypi.org/legacy/
           verbose: true
+
+      - name: Create RC tag
+        if: success()
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git tag -a "${{ steps.version.outputs.rc_version }}" -m "Release candidate ${{ steps.version.outputs.rc_version }}"
+          git push origin "${{ steps.version.outputs.rc_version }}"
