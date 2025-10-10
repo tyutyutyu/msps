@@ -52,9 +52,9 @@ jobs:
           echo "rc_version=${SEMVER_RC_VERSION}" >> $GITHUB_OUTPUT
           echo "pep440_rc_version=${PEP440_RC_VERSION}" >> $GITHUB_OUTPUT
 
-          echo "Original version: ${VERSION}"
-          echo "RC version (SemVer): ${SEMVER_RC_VERSION}"
-          echo "RC version (PEP 440): ${PEP440_RC_VERSION}"
+          printf "::notice::Original version: %s\n" "${VERSION}"
+          printf "::notice::RC version (SemVer): %s\n" "${SEMVER_RC_VERSION}"
+          printf "::notice::RC version (PEP 440): %s\n" "${PEP440_RC_VERSION}"
 
       - name: Build
         run: uv build
