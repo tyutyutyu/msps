@@ -38,7 +38,7 @@ jobs:
       - name: Bump version to RC
         id: version
         run: |
-          VERSION=$(uv version | awk '{print $2}')
+          VERSION=$(uv version --short)
 
           RC_COUNT=$(git tag -l "${VERSION}-rc.*" | wc -l)
           RC_COUNT=$((RC_COUNT + 1))
