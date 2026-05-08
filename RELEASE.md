@@ -18,8 +18,8 @@
    ```
 3. Commit the version change, then tag and push:
    ```bash
-   git add pyproject.toml && git commit -m "chore: bump version to 1.0.3rc1"
-   task release:test VERSION=1.0.3rc1
+   git add pyproject.toml uv.lock && git commit -m "chore: bump version to 1.0.3rc1"
+   task release:test VERSION="$(uv version --short)"
    ```
 4. The `v1.0.3rc1` tag triggers the **Publish to TestPyPI** workflow.
 5. Validate the published package installs and works:

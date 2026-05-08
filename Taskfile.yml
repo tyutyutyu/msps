@@ -87,7 +87,7 @@ tasks:
     preconditions:
       - sh: '[ -n "{{.VERSION}}" ]'
         msg: "VERSION required, e.g.: task release:prod VERSION=1.0.3"
-      - sh: '! echo "{{.VERSION}}" | grep -qE "rc[0-9]+"'
+      - sh: 'echo "{{.VERSION}}" | grep -qvE "rc[0-9]+"'
         msg: "Production releases must not have an rc suffix"
     cmds:
       - git tag v{{.VERSION}}
