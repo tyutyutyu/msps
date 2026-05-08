@@ -2,5 +2,5 @@
 
 set -e
 
-poetry run coverage run --branch --module pytest
-coverage report --show-missing
+uv run coverage run --branch --module pytest
+uv run coverage report --show-missing

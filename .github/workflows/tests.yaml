@@ -39,7 +39,7 @@ jobs:
         run: uv run mypy
 
       - name: Check code style
-        run: uv run pylint msps
+        run: uv run pylint src/msps
 
   sonarcloud:
     runs-on: ubuntu-latest

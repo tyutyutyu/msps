@@ -1,16 +1,17 @@
-name: Publish PyPI
+name: Publish to PyPI
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v[0-9]*'
 
 permissions: read-all
 
 jobs:
   release-prod:
-    name: Publish PyPI
+    name: Publish to PyPI
     runs-on: ubuntu-latest
+    if: "!contains(github.ref, 'rc')"
 
     environment:
       name: release-prod
@@ -32,52 +33,35 @@ jobs:
         with:
           python-version: "3.14"
 
-      - name: Install packages
-        run: uv sync
+      - name: Verify tag matches pyproject version
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          PYPROJECT_VERSION=$(uv run python -c "import tomllib; print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])")
+          echo "Tag version:      ${TAG_VERSION}"
+          echo "pyproject version: ${PYPROJECT_VERSION}"
+          [ "${TAG_VERSION}" = "${PYPROJECT_VERSION}" ] || { echo "Version mismatch: tag=${TAG_VERSION} pyproject=${PYPROJECT_VERSION}"; exit 1; }
 
       - name: Build
         run: uv build
 
-      - name: Publish distribution 📦 to PyPI
+      - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
 
-      - name: Sign the dists with Sigstore
+      - name: Sign with Sigstore
         uses: sigstore/gh-action-sigstore-python@v3.2.0
         with:
           inputs: >-
             ./dist/*.tar.gz
             ./dist/*.whl
 
-      - name: Get version
-        run: echo "VERSION=$(uv run python -c "import tomllib; print(tomllib.load(open('pyproject.toml', 'rb'))['project']['version'])")" >> $GITHUB_ENV
-
       - name: Create GitHub Release
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
+          VERSION="${GITHUB_REF_NAME#v}"
           gh release create \
-            "${VERSION}" \
+            "${GITHUB_REF_NAME}" \
             dist/** \
             --repo '${{ github.repository }}' \
             --generate-notes \
             --title "${VERSION}"
-
-      - name: Create Pull Request to main
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: |
-          PR_URL=$(gh pr create \
-            --base main \
-            --title "Merge release back to main" \
-            --body "Auto-merge release back to main")
-          echo "PR_URL=${PR_URL}" >> $GITHUB_ENV
-
-      - name: Merge Pull Request to main
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: |
-          gh pr merge \
-            --auto \
-            --merge \
-            --delete-branch \
-             "${PR_URL}"
