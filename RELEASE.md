@@ -49,6 +49,14 @@
    - Signs artifacts with Sigstore
    - Creates a GitHub Release with auto-generated notes
 
+## After Production Release
+
+Merge `main` back to `develop` to keep the branches in sync:
+
+```bash
+task merge:back-to-develop
+```
+
 ## Tag Format
 
 | Target   | Tag format       | Example       |

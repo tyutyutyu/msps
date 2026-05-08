@@ -82,6 +82,13 @@ tasks:
       - git tag v{{.VERSION}}
       - git push origin v{{.VERSION}}
 
+  merge:back-to-develop:
+    desc: Merge main back to develop after a production release
+    cmds:
+      - git checkout develop
+      - git merge main --no-ff -m "chore: merge main back to develop"
+      - git push origin develop
+
   release:prod:
     desc: "Tag and push for PyPI. Usage: task release:prod VERSION=1.0.3"
     preconditions:
