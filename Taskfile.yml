@@ -1,0 +1,94 @@
+version: '3'
+
+tasks:
+  sync:
+    desc: Install all dependencies (all extras)
+    cmds:
+      - uv sync --all-extras
+
+  test:
+    desc: Run tests with branch coverage
+    cmds:
+      - uv run coverage run --branch --module pytest
+      - uv run coverage xml
+
+  type-check:
+    desc: Run mypy type checks
+    cmds:
+      - uv run mypy
+
+  lint:
+    desc: Run pylint on source
+    cmds:
+      - uv run pylint src/msps
+
+  deps:audit:
+    desc: Audit for undeclared or unused runtime dependencies
+    cmds:
+      - uv run deptry .
+
+  build:
+    desc: Build wheel and sdist into dist/
+    cmds:
+      - rm -rf dist/
+      - uv build
+
+  package:check:
+    desc: Validate distribution metadata with twine
+    cmds:
+      - uv run twine check dist/*
+
+  package:smoke:
+    desc: Install wheel in isolated venv and verify runtime entry points and metadata
+    vars:
+      VENV: /tmp/msps-smoke-venv
+    cmds:
+      - rm -rf "{{.VENV}}"
+      - python3 -m venv "{{.VENV}}"
+      - "{{.VENV}}/bin/pip install --quiet dist/*.whl"
+      - "{{.VENV}}/bin/python -c \"from msps.cli import app; print('ok: msps.cli imports')\""
+      - "{{.VENV}}/bin/python -m msps --help"
+      - "{{.VENV}}/bin/python -c \"import importlib.metadata; deps=importlib.metadata.requires('msps') or []; assert any('typer' in d for d in deps), 'typer missing from wheel metadata'; print('ok: typer in metadata')\""
+      - "{{.VENV}}/bin/python -c \"import importlib.metadata; deps=importlib.metadata.requires('msps') or []; assert any('rich' in d for d in deps), 'rich missing from wheel metadata'; print('ok: rich in metadata')\""
+      - rm -rf "{{.VENV}}"
+
+  verify:
+    desc: Run all verification checks (tests, types, lint, deps, build, package)
+    cmds:
+      - task: sync
+      - task: test
+      - task: type-check
+      - task: lint
+      - task: deps:audit
+      - task: build
+      - task: package:check
+      - task: package:smoke
+
+  version-bump:
+    desc: "Bump project version. Usage: task version-bump -- patch|minor|major"
+    silent: true
+    cmds:
+      - uv version --bump {{.CLI_ARGS}}
+      - uv version --short
+
+  release:test:
+    desc: "Tag and push for TestPyPI. Usage: task release:test VERSION=1.0.3rc1"
+    preconditions:
+      - sh: '[ -n "{{.VERSION}}" ]'
+        msg: "VERSION required, e.g.: task release:test VERSION=1.0.3rc1"
+      - sh: 'echo "{{.VERSION}}" | grep -qE "rc[0-9]+"'
+        msg: "TestPyPI releases require an RC version string (e.g. 1.0.3rc1)"
+    cmds:
+      - git tag v{{.VERSION}}
+      - git push origin v{{.VERSION}}
+
+  release:prod:
+    desc: "Tag and push for PyPI. Usage: task release:prod VERSION=1.0.3"
+    preconditions:
+      - sh: '[ -n "{{.VERSION}}" ]'
+        msg: "VERSION required, e.g.: task release:prod VERSION=1.0.3"
+      - sh: '! echo "{{.VERSION}}" | grep -qE "rc[0-9]+"'
+        msg: "Production releases must not have an rc suffix"
+    cmds:
+      - git tag v{{.VERSION}}
+      - git push origin v{{.VERSION}}

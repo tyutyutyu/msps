@@ -28,15 +28,16 @@ dev = [
   "pytest-sugar>=1.0.0",
   "pytest-cov>=6.0.0",
   "isort>=5.13.2",
+  "deptry>=0.22.0",
+  "twine>=6.0.0",
 ]
 
 [project.scripts]
 msps = "msps.__main__:main"
-testui = "tests.manual_test_ui:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["msps", "tests"]
+include = ["msps*"]
 
 [tool.mypy]
 packages = "src"
@@ -51,3 +52,19 @@ pythonpath = ["src"]
 
 [tool.isort]
 profile = "black"
+
+[tool.deptry]
+optional_dependencies_dev_groups = ["test", "dev", "typing", "lint"]
+
+[tool.deptry.per_rule_ignores]
+DEP003 = ["msps"]
+
+[tool.pylint.messages_control]
+disable = [
+  "C0114",
+  "C0115",
+  "C0116",
+  "R0903",
+  "R1735",
+  "W0622",
+]
