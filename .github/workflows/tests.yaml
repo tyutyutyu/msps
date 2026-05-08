@@ -24,10 +24,10 @@ jobs:
           architecture: x64
 
       - name: Install UV
-        uses: astral-sh/setup-uv@v7
+        uses: astral-sh/setup-uv@v8.1.0
 
       - name: Checkout branch
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install packages via UV
         run: uv sync --extra test
@@ -40,3 +40,39 @@ jobs:
 
       - name: Check code style
         run: uv run pylint src/msps
+<<<<<<< HEAD
+=======
+
+  sonarcloud:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Update python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+          architecture: x64
+
+      - name: Install UV
+        uses: astral-sh/setup-uv@v8.1.0
+
+      - name: Checkout branch
+        uses: actions/checkout@v6
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+
+      - name: Install packages via UV
+        run: uv sync --extra test
+
+      - name: Run tox
+        run: uv run tox -e py
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@v5.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          JAVA_HOME: /opt/java/openjdk
+          SONAR_SCANNER_HOME: /opt/sonar-scanner
+>>>>>>> f395c1860cd8030738f01ec5147bfcc1221d5226
