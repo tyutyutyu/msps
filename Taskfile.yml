@@ -86,7 +86,7 @@ tasks:
     desc: Merge main back to develop after a production release
     cmds:
       - git checkout develop
-      - git merge main --no-ff -m "chore: merge main back to develop"
+      - "git merge main --no-ff -m 'chore: merge main back to develop'"
       - git push origin develop
 
   release:prod:
