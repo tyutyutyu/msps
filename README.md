@@ -1,7 +1,7 @@
 # MSPS - Maven Settings Profile Switcher
 
 ![PyPI - Version](https://img.shields.io/pypi/v/msps?style=for-the-badge)
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/msps?style=for-the-badge)
+![PyPI - Python Version](https://img.shields.io/badge/dynamic/json?query=info.requires_python&label=python&url=https%3A%2F%2Fpypi.org%2Fpypi%2Fmsps%2Fjson&style=for-the-badge)
 ![PyPI - License](https://img.shields.io/pypi/l/msps?style=for-the-badge)
 ![Sonar Coverage](https://img.shields.io/sonar/coverage/tyutyutyu_msps?server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge)
 ![Sonar Quality Gate](https://img.shields.io/sonar/quality_gate/tyutyutyu_msps?server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge)
