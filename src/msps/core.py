@@ -16,7 +16,7 @@ printer = Printer()
 
 
 def find_settings_profiles() -> MavenProfiles:
-    profiles = dict()
+    profiles: MavenProfiles = {}
     for file in glob.glob(f"{maven.m2_home}/*.xml"):
         res = re.findall(config.settings_file_pattern, file)
         if res:
