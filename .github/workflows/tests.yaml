@@ -28,7 +28,7 @@ jobs:
         uses: astral-sh/setup-uv@v8.3.2
 
       - name: Checkout branch
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Install packages via UV
         run: uv sync --extra test
