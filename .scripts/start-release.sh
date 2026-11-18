@@ -40,9 +40,14 @@ CURRENT_BRANCH="$(git branch --show-current)"
 echo -e "\n${BOLD}Release ${VERSION} ($( ${IS_RC} && echo 'TestPyPI (RC)' || echo 'PyPI (Production)'))${NC}"
 echo "Current branch: ${CURRENT_BRANCH}"
 
-if ! ${IS_RC} && [[ "${CURRENT_BRANCH}" != "develop" ]]; then
-  warn "Production releases are normally run from 'develop'. You are on '${CURRENT_BRANCH}'."
-  confirm "Continue anyway?" || die "Aborted."
+# main is protected: the version bump goes through a release branch and a PR.
+if [[ "${CURRENT_BRANCH}" == "main" ]]; then
+  RELEASE_BRANCH="release/${VERSION}"
+  step "Creating release branch ${RELEASE_BRANCH} from main"
+  git pull --ff-only
+  git switch -c "${RELEASE_BRANCH}"
+  CURRENT_BRANCH="${RELEASE_BRANCH}"
+  ok "On ${CURRENT_BRANCH}"
 fi
 
 # ─── 1. set version ─────────────────────────────────────────────────────────
@@ -62,7 +67,7 @@ git add pyproject.toml uv.lock
 git diff --cached --quiet && die "Nothing to commit — pyproject.toml and uv.lock unchanged."
 git commit -m "chore: bump version to ${VERSION}"
 confirm "Push to origin/${CURRENT_BRANCH}?" || die "Aborted."
-git push origin "${CURRENT_BRANCH}"
+git push -u origin "${CURRENT_BRANCH}"
 ok "Pushed to origin/${CURRENT_BRANCH}"
 
 # ─── RC flow ─────────────────────────────────────────────────────────────────
@@ -109,11 +114,6 @@ task release:prod VERSION="${VERSION}"
 ok "Tag v${VERSION} pushed — PyPI release workflow started"
 
 wait_enter "Wait for the GitHub Actions release workflow to complete.\n  Check: https://github.com/$(gh repo view --json nameWithOwner -q .nameWithOwner)/actions"
-
-step "Merging main back to develop"
-confirm "Merge main back to develop now?" || { warn "Skipped — run: task merge:back-to-develop"; exit 0; }
-task merge:back-to-develop
-ok "develop is synced with main"
 
 echo -e "\n${GREEN}${BOLD}✓ Release ${VERSION} complete!${NC}"
 echo "Verify: uvx msps@latest --help"
