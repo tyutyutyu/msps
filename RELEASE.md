@@ -1,9 +1,18 @@
 # Release Process
 
+## Branching Model
+
+`main` is the only long-lived branch and is protected: every change, including
+version bumps, lands through a pull request from a short-lived branch
+(`feature/*`, `fix/*`, `release/*`). Production tags are created on `main`.
+
 ## Prerequisites
 
 - All changes committed on the working branch
 - `task` (Task runner) and `uv` installed
+
+> `.scripts/start-release.sh <version>` automates the steps below. When started
+> on `main`, it creates a `release/<version>` branch for the version bump.
 
 ## Test Release (TestPyPI)
 
@@ -48,14 +57,6 @@
    - Publishes to PyPI via Trusted Publishing
    - Signs artifacts with Sigstore
    - Creates a GitHub Release with auto-generated notes
-
-## After Production Release
-
-Merge `main` back to `develop` to keep the branches in sync:
-
-```bash
-task merge:back-to-develop
-```
 
 ## Tag Format
 
